@@ -26,8 +26,15 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa.pub
 
+# Adding the ssh-key option
+RUN echo "Host github.com-*" >> ~/.ssh/config
+RUN echo "HostName github.com" >> ~/.ssh/config
+RUN echo "IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+
 # Clone the app file into the docker container
 RUN git clone git@github.com:HealthTap/nextweb.git
+
+
 
 #COPY package.json /app
 RUN cd nextweb; npm install
